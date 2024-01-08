@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getLocalCartData = () => {
+  if (typeof window !== 'undefined') {
+    // Check if running on the client side
+    return JSON.parse(localStorage.getItem('cart'))?.products || [];
+  } else {
+    return [];
+  }
+};
+
 const initialState = {
-  products: [],
+  products: getLocalCartData(),
 };
 
 const cartSlice = createSlice({
@@ -16,7 +25,9 @@ const cartSlice = createSlice({
           state.products[i].quantity += 1;
         }
       }
-      if (!found) state.products.push(action.payload);
+      if (!found) {
+        state.products.push(action.payload);
+      }
     },
     remove: (state, action) => {
       for (let i = 0; i < state.products.length; i++) {

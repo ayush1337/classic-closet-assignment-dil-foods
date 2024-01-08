@@ -1,27 +1,49 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import DummyData from '../../../utils/dummyData.json';
 import Image from 'next/image';
+
+import DummyData from '../../../utils/dummyData.json';
+import { add, remove, deleteItem, empty } from '../../lib/features/cartSlice';
+
 import cartIconWhite from '../../../assets/cart_ico_white.svg';
 import plusIcon from '../../../assets/plus_ico.svg';
 import minusIcon from '../../../assets/minus_ico.svg';
-import { add, remove, deleteItem, empty } from '../../lib/features/cartSlice';
+
 const ProductId = ({ params }) => {
   const [productCount, setproductCount] = useState(0);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const filteredProducts = DummyData.filter(
+  //Initialize Product cart info from local storage on first render.
+
+  useEffect(() => {
+    const localProductData = JSON.parse(localStorage.getItem('cart')).products;
+    localProductData?.forEach((product) => {
+      if (Number(product.id) === Number(params.productId)) {
+        setproductCount(() => product.quantity);
+      }
+    });
+  }, []);
+
+  //Refresh Local Storage Everytime cart is updated
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  //Filter Product according to product ID
+
+  const getProduct = DummyData.filter(
     (product) => product.id == params.productId
   );
 
-  if (filteredProducts.length === 0) {
+  if (getProduct.length === 0) {
     return <div>Product not found</div>;
   }
 
-  const product = filteredProducts[0];
-  console.log(cart);
+  const [product] = getProduct;
+
   return (
     <div className="w-full min-h-[100dvh]">
       <div className="mx-auto w-full max-w-[1400px] flex flex-col lg:flex-row">
