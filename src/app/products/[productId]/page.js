@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
 
-import DummyData from '../../../utils/dummyData.json';
-import { add, remove, deleteItem, empty } from '../../lib/features/cartSlice';
+import DummyData from '@/utils/dummyData.json';
+import { add, remove } from '../../lib/features/cartSlice';
 
-import cartIconWhite from '../../../assets/cart_ico_white.svg';
-import plusIcon from '../../../assets/plus_ico.svg';
-import minusIcon from '../../../assets/minus_ico.svg';
+import cartIconWhite from '@/assets/cart_ico_white.svg';
+import plusIcon from '@/assets/plus_ico.svg';
+import minusIcon from '@/assets/minus_ico.svg';
 
 const ProductId = ({ params }) => {
   const [productCount, setproductCount] = useState(0);
@@ -18,7 +18,7 @@ const ProductId = ({ params }) => {
   //Initialize Product cart info from local storage on first render.
 
   useEffect(() => {
-    const localProductData = JSON.parse(localStorage.getItem('cart')).products;
+    const localProductData = JSON.parse(localStorage.getItem('cart'))?.products;
     localProductData?.forEach((product) => {
       if (Number(product.id) === Number(params.productId)) {
         setproductCount(() => product.quantity);

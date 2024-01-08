@@ -17,6 +17,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    //Add item to cart
     add: (state, action) => {
       let found = false;
       for (let i = 0; i < state.products.length; i++) {
@@ -29,6 +30,8 @@ const cartSlice = createSlice({
         state.products.push(action.payload);
       }
     },
+
+    //Remove an item from cart
     remove: (state, action) => {
       for (let i = 0; i < state.products.length; i++) {
         if (state.products[i]?.id === action.payload) {
@@ -40,6 +43,7 @@ const cartSlice = createSlice({
         }
       }
     },
+    //Remove whole item from cart
     deleteItem: (state, action) => {
       let i = -1;
       let found = false;
@@ -51,6 +55,7 @@ const cartSlice = createSlice({
       }
       if (found) delete state.products[i];
     },
+    //Empty whole cart
     empty: (state) => {
       state.products = [];
     },

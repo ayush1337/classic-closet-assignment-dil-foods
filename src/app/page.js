@@ -1,11 +1,12 @@
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
 
-import DummyData from '../utils/dummyData.json';
+import DummyData from '@/utils/dummyData.json';
 
-import classicHeader from '../assets/classic-header.png';
-import filterIcon from '../assets/filter_ico.svg';
-import Link from 'next/link';
+import classicHeader from '@/assets/classic-header.png';
+import filterIcon from '@/assets/filter_ico.svg';
+import CardItemMain from '@/components/CardItemMain';
+
 const HomePage = () => {
   return (
     <div className="p-16 flex flex-col gap-6">
@@ -43,34 +44,15 @@ const HomePage = () => {
                 key={product.id}
                 className="rounded  min-h-[500px] max-w-[350px] flex flex-col justify-between"
               >
-                <Link
-                  href={`/products/${product.id}`}
-                  className="flex flex-col gap-2"
-                >
-                  <Image
-                    src={product.image}
-                    width={350}
-                    height={200}
-                    alt={product.title}
-                    className="shadow-box p-16 aspect-[1/1] object-contain"
-                  />
-
-                  <span className="uppercase text-xs font-semibold opacity-75 text-black">
-                    {product.category}
-                  </span>
-
-                  <h2 className="max-w-[85%] text-sm">{product.title}</h2>
-
-                  <div className="flex justify-between">
-                    <span className="font-extrabold">
-                      &#8377; {product.price}
-                    </span>
-                    <span className="text-xs">{product.rating.rate}/5</span>
-                  </div>
-                </Link>
-                <button className="rounded-xl font-bold bg-red-600 text-white uppercase text-xs py-2 hover:opacity-85">
-                  Add to Cart
-                </button>
+                <CardItemMain
+                  id={product.id}
+                  category={product.category}
+                  image={product.image}
+                  price={product.price}
+                  quantity={0}
+                  rating={product.rating}
+                  title={product.title}
+                />
               </li>
             );
           })}
