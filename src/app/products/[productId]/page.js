@@ -1,12 +1,16 @@
 'use client';
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import DummyData from '../../../utils/dummyData.json';
 import Image from 'next/image';
 import cartIconWhite from '../../../assets/cart_ico_white.svg';
 import plusIcon from '../../../assets/plus_ico.svg';
 import minusIcon from '../../../assets/minus_ico.svg';
+import { add, remove, deleteItem, empty } from '../../lib/features/cartSlice';
 const ProductId = ({ params }) => {
   const [productCount, setproductCount] = useState(0);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const filteredProducts = DummyData.filter(
     (product) => product.id == params.productId
@@ -17,7 +21,7 @@ const ProductId = ({ params }) => {
   }
 
   const product = filteredProducts[0];
-
+  console.log(cart);
   return (
     <div className="w-full min-h-[100dvh]">
       <div className="mx-auto w-full max-w-[1400px] flex flex-col lg:flex-row">
@@ -26,6 +30,7 @@ const ProductId = ({ params }) => {
           width={750}
           height={200}
           alt={product.title}
+          priority={true}
           className="shadow-box p-16 aspect-[1/1] object-contain"
         />
         <div className="flex flex-col gap-8 md:p-16 p-8">
@@ -41,11 +46,12 @@ const ProductId = ({ params }) => {
 
           {productCount === 0 && (
             <button
-              onClick={() =>
+              onClick={() => {
+                dispatch(add({ quantity: 1, ...product }));
                 setproductCount((p) => {
                   return p + 1;
-                })
-              }
+                });
+              }}
               className="w-full bg-red-600 uppercase font-medium rounded-md py-2 text-white flex justify-center items-center gap-4 hover:bg-red-500"
             >
               <Image
@@ -68,11 +74,12 @@ const ProductId = ({ params }) => {
                 height={36}
                 width={36}
                 className="cursor-pointer rounded-full border-[1px] border-solid border-red-600"
-                onClick={() =>
+                onClick={() => {
+                  dispatch(add({ quantity: 1, ...product }));
                   setproductCount((p) => {
                     return p + 1;
-                  })
-                }
+                  });
+                }}
               />
 
               <span className="text-red-600">{productCount}</span>
@@ -82,14 +89,15 @@ const ProductId = ({ params }) => {
                 height={36}
                 width={36}
                 className="cursor-pointer rounded-full border-[1px] border-solid border-red-600"
-                onClick={() =>
+                onClick={() => {
+                  dispatch(remove(product.id));
                   setproductCount((p) => {
                     if (p === 0) {
                       return p;
                     }
                     return p - 1;
-                  })
-                }
+                  });
+                }}
               />
             </div>
           )}
