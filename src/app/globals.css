@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-nav ul > * {
-  cursor: pointer;
-}
-
-.nav-list li:hover {
-  border-bottom: 1px solid #dc2626;
-}
-
 .filter-btn {
   @apply flex gap-2 bg-white rounded shadow w-fit items-center px-4 py-2 font-normal opacity-85 cursor-pointer  text-red-600;
 }
