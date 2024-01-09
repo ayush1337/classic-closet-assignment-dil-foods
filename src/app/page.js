@@ -15,7 +15,9 @@ const HomePage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/#products');
+    if (search.query !== '') {
+      router.push('/#products');
+    }
   }, [search]);
 
   //sorting logic for products
