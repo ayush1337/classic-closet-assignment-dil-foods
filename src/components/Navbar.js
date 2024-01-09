@@ -31,10 +31,10 @@ const Navbar = () => {
   };
   return (
     <nav className="w-full max-h-24 shadow-xl z-10 px-6 flex justify-between items-center uppercase text-sm bg-white text-red-600 font-bold sticky top-0 right-0">
-      <Link href="/" className="w-36 hover:cursor-pointer">
+      <Link href="/" className="w-24 md:w-36 hover:cursor-pointer">
         <Image
           src={classicLogo}
-          className="w-full"
+          className=" w-full"
           alt="classic closet logo"
           priority={true}
         />
