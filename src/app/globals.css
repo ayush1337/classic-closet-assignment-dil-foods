@@ -11,7 +11,7 @@ nav ul > * {
 }
 
 .filter-btn {
-  @apply flex gap-2 bg-white rounded-full shadow-md w-fit items-center px-4 py-2 font-normal opacity-85 cursor-pointer border-slate-100 border-2 border-solid text-red-600;
+  @apply flex gap-2 bg-white rounded shadow w-fit items-center px-4 py-2 font-normal opacity-85 cursor-pointer  text-red-600;
 }
 
 .shadow-box {

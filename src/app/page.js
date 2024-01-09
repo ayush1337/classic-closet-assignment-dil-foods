@@ -1,13 +1,48 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import DummyData from '@/utils/dummyData.json';
 
 import classicHeader from '@/assets/classic-header.png';
-import filterIcon from '@/assets/filter_ico.svg';
 import CardItemMain from '@/components/CardItemMain';
 
 const HomePage = () => {
+  const [productData, setProductData] = useState(DummyData);
+
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    switch (selectedValue) {
+      case 'CL':
+        const sortedDataCL = [...productData].sort((a, b) => a.price - b.price);
+        setProductData(() => sortedDataCL);
+        break;
+
+      case 'CH':
+        const sortedDataCH = [...productData].sort((a, b) => b.price - a.price);
+        setProductData(() => sortedDataCH);
+        break;
+
+      case 'NA':
+        const sortedDataNA = [...productData].sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
+        setProductData(() => sortedDataNA);
+        break;
+
+      case 'NZ':
+        const sortedDataNZ = [...productData].sort((a, b) =>
+          b.title.localeCompare(a.title)
+        );
+        setProductData(() => sortedDataNZ);
+        break;
+
+      default:
+        setProductData(() => DummyData);
+        break;
+    }
+  };
+
   return (
     <div className="p-16 flex flex-col gap-6">
       <Image
@@ -18,27 +53,26 @@ const HomePage = () => {
       />
       <div className="w-full h-[1px] solid bg-red-600 opacity-25"></div>
       <section>
-        <h1 className="text-red-600 font-extrabold text-xl">
+        <h1 className="text-red-600 font-extrabold text-xl pb-8">
           Explore Products
         </h1>
-        <div>
-          <ul className="flex gap-4 flex-wrap pt-6">
-            <li className="filter-btn">
-              Filter
-              <Image
-                src={filterIcon}
-                alt="filter_ico icon"
-                height={18}
-                width={18}
-                className="opacity-85 fill-red-600 text-red-600"
-              />
-            </li>
-            <li className="filter-btn">Category</li>
-          </ul>
-        </div>
+
+        <select
+          onChange={handleSelectChange}
+          id="default"
+          className=" cursor-pointer bg-red-50 border border-red-300 text-red-900 mb-6 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-gray-400 dark:text-red dark:focus:ring-red-500 dark:focus:border-red-500"
+        >
+          <option defaultValue value="DF">
+            Sort Products (Default)
+          </option>
+          <option value="CL">Cost: Low to High</option>
+          <option value="CH">Cost: High to Low</option>
+          <option value="NA">Name: A to Z</option>
+          <option value="NZ">Name: Z to A</option>
+        </select>
 
         <ul className="flex gap-8 pt-8 flex-wrap items-center md:justify-evenly justify-center">
-          {DummyData.map((product) => {
+          {productData.map((product) => {
             return (
               <li
                 key={product.id}
