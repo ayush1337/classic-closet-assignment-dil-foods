@@ -66,12 +66,11 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className="flex gap-4">
-        <li className="flex gap-2 items-center font-medium">
+        <li className="flex gap-2 items-center font-medium px-4 rounded-full shadow">
           <input
             type="text"
             placeholder="Search Products..."
-            className="focus:outline-none w-24 placeholder-red-600"
-            // value={searchTerm}
+            className="focus:outline-none w-32 placeholder-red-600"
             onChange={handleSearch}
           />
           <Image

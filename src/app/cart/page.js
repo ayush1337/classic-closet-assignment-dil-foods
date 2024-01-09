@@ -91,6 +91,13 @@ const Cart = () => {
             <h1>Grand Total</h1>
             <span>&#8377; {grandTotal}</span>
           </li>
+          <li>
+            <Link href="/checkout">
+              <button className="w-full bg-red-600 text-white py-2 font-bold rounded-full">
+                Checkout
+              </button>
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
